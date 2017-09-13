@@ -1,6 +1,7 @@
 import pandas as pd
 from glob import glob
 from string import capwords
+import numpy as np
 
 def levenshtein(source, target):
     if len(source) < len(target):
@@ -39,6 +40,7 @@ def levenshtein(source, target):
 
     return previous_row[-1]
 
+
 files = glob('wtc_data/wtc*_results.json')
 
 #make a new dataframe
@@ -66,14 +68,39 @@ name_fix = {}
 for i, p in enumerate(players):
     for j in range(4):
         try:
-            dist = levenshtein(players[i], players[i+j+1])
+            dist = levenshtein(players[i], players[i + j + 1])
         except IndexError: # we are running off the end
             continue
         if dist <= 2:
-            print(players[i], players[i+j+1])
-            name_fix[players[i]] = players[i+j+1]
+            print(players[i], players[i + j + 1])
+            name_fix[players[i]] = players[i + j + 1]
 
 # this should be visually inspected to make sure it looks good before replacing
-# names in the data files.
+# names in the data files. I manually removed 1 item and tweaked a second to
+# make sure things worked out.
+# After the visual inspect you can run the following code to update all of the
+# data frames.
 
+# manual edits:
+# del name_fix['David Kane']
+# del name_fix['Maurus Markwalder']
+# name_fix['Maurus Markwalder:'] = 'Maurus Markwalder'
 
+if False:
+    for r in results:
+        for n in name_fix:
+            r.loc[r['player'] == 'Maurus Markwalder:', 'player'] = 'Maurus Markwalder'
+
+# After this point. You can update the number of changes in the levenshtein
+# function to 3 (line 74) and rerun things. This gives a few more changes, most
+# of which aren't real changes. I did update a few at this point 'Matt' ->
+# 'Matthew' for example. Again, this has to be done interactive, to avoid names
+# that really shouldn't be changed.
+
+# Here are the changes:
+
+# name_fix['Jay Mcleod'] = 'Jason Mcleod'
+# name_fix['Freek Punt'] = 'Frederik Punt'
+# name_fix['Nikos Kerazoglou'] = 'Nikolaos Kerazoglou'
+# name_fix['Michal Konieczny'] = 'Michal Nakonieczny'
+# name_fix['Matt Goligher'] =  'Matthew Goligher'
