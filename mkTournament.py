@@ -4,6 +4,19 @@ import numpy as np
 from optparse import OptionParser
 
 def init_tounament(df, initFrom):
+    ''' This function initializes the elo scores using the ending score from
+    the previous year's tournament. If the player didn't play in the previous
+    year then they get the default value of 1500.
+
+    @type df: pandas.DataFrame
+    @param df: Current tournament dataframe
+    @type initFrom: into
+    @param initFrom: Previous year to use for the initialization
+    @rtype: pandas.DatFrame
+    @return: The initialized dataframe for the current tournament.
+
+    '''
+
     old_df = pd.read_json('wtc{}_results_elo.json'.format(initFrom))
 
     # now get a sorted list of unique players
@@ -31,6 +44,18 @@ def init_tounament(df, initFrom):
     return df
 
 def score_tournament(df):
+    ''' Does all of the elo scoring for the entire tournament. Handles all of
+    the updating of the dataframe. The final elo standings for the players are
+    defined as the 'elo_current' for the final round. It is this value that
+    will be used to initialize a future year's tournament if that is desired.
+
+    @type df: pandas.DataFrame
+    @param df: The current tournament for which we are running the scoring.
+    @rtype: pandas.DataFrame
+    @return: The scored dataframe for the current tournament.
+
+    '''
+
     for i in np.sort(df.match.unique()):
         match = df.loc[df.match == i]
         player1 = df.loc[df.player == match.player.iloc[0]]
