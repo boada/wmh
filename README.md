@@ -1,6 +1,7 @@
 # WTC Tournament Analysis/Forecast
 
 ## Intro
+The [Warmachine and Hordes World Team Championship](https://wmhwtc.wordpress.com/) (WTC) is the single largest gathering of high-level Warmachine and Hordes (WM/H) player in the world. Each participating country sponsors one or more five player teams which battle in a Swiss style tournament until only a single team is undefeated. The army lists for each team, which have been submitted in advance, and the eventual results of the tournament are made available in machine readable formats. This unique (in the world of WM/H tournaments) situation provides an excellent opportunity for a deep data analysis of the current state of high-level WM/H tournament play.
 
 This project has two parts.
  - 1. Try to use previous WTC tournament results to forecast the results from the upcoming WTC.
@@ -8,11 +9,11 @@ This project has two parts.
 
 For the forecasting portion. We've assigned each player (603 unique as of 2016) an [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) score initialized at 1500. We then update their individual rankings at the end of each round. If the Elo ranking was a good predictor of final placement, then we'd expect that the team with the highest combined Elo rank would win the tournament (spoiler: it's not).
 
-In each matchup we also calculate the probability of each player winning the game (`pwin`). This is defined as:
+In each match up we also calculate the probability of each player winning the game (`pwin`). This is defined as:
 
     1 / (1 + 10 ** ((B - A) / 400))
 
-This works really well for Chess where the game is balanced well. In Warmachine and Hordes their are many ways to win and many different match ups that could possibly occur. Currently, `pwin` does not take any of this additional information into account. In the future we will define corrections to the Elo ranking which attempt to take into consideration things like the margin of victory (MOV) and other information, such as the specific match up. Most of these corrections are entirely data driven. We build a model of each player's good and bad match ups and then constantly update things as the dataset grows.
+This works really well for Chess where the game is balanced well. In WM/H their are many ways to win and many different match ups that could possibly occur. Currently, `pwin` does not take any of this additional information into account. In the future we will define corrections to the Elo ranking which attempt to take into consideration things like the margin of victory (MOV) and other information, such as the specific match up. Most of these corrections are entirely data driven. We build a model of each player's good and bad match ups and then constantly update things as the dataset grows.
 
 ## DIY
 
@@ -28,4 +29,4 @@ Pull requests are welcome.
 
 ## License
 
-All of the original code is licensed under the MIT license. See the attached `LICENSE.md` file. Anything that isn't original code is probably owned by Privateer Press.
+All of the original code is licensed under the MIT license. See the attached `LICENSE.md` file. Anything that isn't original code is probably owned by [Privateer Press](http://privateerpress.com/).
