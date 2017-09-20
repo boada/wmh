@@ -102,5 +102,5 @@ if False:
 # name_fix['Jay Mcleod'] = 'Jason Mcleod'
 # name_fix['Freek Punt'] = 'Frederik Punt'
 # name_fix['Nikos Kerazoglou'] = 'Nikolaos Kerazoglou'
-# name_fix['Michal Konieczny'] = 'Michal Nakonieczny'
+# name_fix['Michal Konieczny'] = 'Michal Nakonieczny' -- this is incorrect
 # name_fix['Matt Goligher'] =  'Matthew Goligher'
