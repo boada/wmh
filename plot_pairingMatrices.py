@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import itertools
 import numpy as np
 import pandas as pd
+import sys
 
 def plot_confusion_matrix(cm,
                           classes,
@@ -14,10 +15,8 @@ def plot_confusion_matrix(cm,
     """
     if normalize:
         cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-        print("Normalized confusion matrix")
     else:
-        print('Confusion matrix, without normalization')
-
+        pass
     print(cm)
 
     plt.figure(figsize=(8, 8))
@@ -31,7 +30,8 @@ def plot_confusion_matrix(cm,
     fmt = '.2f' if normalize else 'd'
     thresh = cm.max() / 2.
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-        if j > i:
+        if j >= i:
+        #if j > i:
             plt.text(j,
                      i,
                      format(cm[i, j], fmt),
@@ -44,10 +44,11 @@ def plot_confusion_matrix(cm,
 
 
 if __name__ == "__main__":
-    df = pd.read_json('wtc_data/wtc2017_lists.json')
+    df = pd.read_json(sys.argv[1])
     factions = df.faction.unique()
 
     for f in factions:
+        print(f)
         #c1 = [i[0] for i in df.loc[df.faction == f, 'list1']]
         #c2 = [i[0] for i in df.loc[df.faction == f, 'list2']]
         c1 = [i for i in df.loc[df.faction == f, 'theme1']]
